@@ -43,6 +43,8 @@ Once the app has been setup, run the following commands:
 ## Details
 This project is split into 5 major components, namely the `NavBar`, `LeftPanel`, `CenterPanel`, `PlanCard` and `CreatePlan`. We expect the candidate to create atleast these 5 components in your React Application.
 
+For the working view of the `LeftPanel` and the `CenterPanel` with expected map interactions, you can visit <a href="http://www.tripalista.com" target="_blank">Tripalista</a>.
+
 The `body` tag should have these specific details:
 - Color: #333
 - Font: Open Sans (Google Font)
@@ -60,6 +62,8 @@ The Navbar should be of the following constrains
 - Background: #eee.
 
 ### CenterPanel
+The `CenterPanel` has a map which highlights the cities listed on the plan when a plan is clicked.
+
 - Width: 3/4th of the screen.
 - Background: #fff.
 
