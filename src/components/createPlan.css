@@ -1,0 +1,21 @@
+.imageContainer {
+  max-height: 220px;
+  background-image: url("../assets/images/plan_background.png");
+  background-size: cover;
+  background-size: 100% 100%;
+  background-color: white;
+}
+
+.formContent {
+  padding: 50px;
+  color: #212121;
+  font-size: 11px;
+}
+
+.summarySection {
+  margin-top: 25px;
+}
+
+.getStartedButton {
+  text-align: center;
+}
