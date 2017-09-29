@@ -6,8 +6,22 @@ import { Grid, Row, Col } from "react-bootstrap";
 import LeftPanel from "./leftPanel.js";
 import CenterPanel from "./centerPanel.js";
 import NavBar from "./navBar.js";
+import CreatePlan from "./CreatePlan.js";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      createPlanOpen: false
+    };
+    this.togglePlan = this.togglePlan.bind(this);
+  }
+
+  //opens/closes create plan form
+  togglePlan() {
+    this.setState({ createPlanOpen: !this.state.createPlanOpen });
+  }
+
   render() {
     const styles = {
       body: {
@@ -34,18 +48,21 @@ class App extends Component {
           <Grid fluid style={styles.grid}>
             <Row style={styles.row}>
               <Col style={styles.col}>
-                <NavBar />
+                <NavBar createPlan={this.togglePlan} />
               </Col>
             </Row>
             <Row style={styles.row}>
-              <Col xs={3} sm={3} md={3} lg={3}>
+              <Col sm={3} md={3} lg={3}>
                 <LeftPanel />
               </Col>
-              <Col xs={9} sm={9} md={9} lg={9}>
+              <Col sm={9} md={9} lg={9}>
                 <CenterPanel />
               </Col>
             </Row>
           </Grid>
+          {this.state.createPlanOpen ? (
+            <CreatePlan closePlan={this.togglePlan} />
+          ) : null}
         </div>
       </MuiThemeProvider>
     );
