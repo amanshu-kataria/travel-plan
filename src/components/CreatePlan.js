@@ -6,11 +6,118 @@ import "./createPlan.css";
 import Chip from "material-ui/Chip";
 
 class CreatePlan extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      planName: "",
+      backgroundImage: "",
+      coverButtonLabel: "choose photo",
+      imageFrontFontColor: "grey",
+      summary: "",
+      chipTag: [
+        { key: 0, label: "Adventure", selected: false },
+        { key: 1, label: "Romantic", selected: false },
+        { key: 2, label: "Shopping", selected: false },
+        { key: 3, label: "History", selected: false },
+        { key: 4, label: "Budget", selected: false },
+        { key: 5, label: "Family", selected: false },
+        { key: 6, label: "Spa", selected: false },
+        { key: 7, label: "Nature", selected: false },
+        { key: 8, label: "Ski", selected: false },
+        { key: 9, label: "Beach", selected: false },
+        { key: 10, label: "Culinary", selected: false },
+        { key: 11, label: "Culture", selected: false }
+      ]
+    };
+
+    this.onFileUpload = this.onFileUpload.bind(this);
+    this.handlePlanName = this.handlePlanName.bind(this);
+    this.removeCover = this.removeCover.bind(this);
+    this.getStarted = this.getStarted.bind(this);
+    this.handleSummary = this.handleSummary.bind(this);
+    this.handleChip = this.handleChip.bind(this);
+  }
+
+  getStarted() {
+    this.props.onCreatePlan(
+      this.state.planName,
+      this.state.backgroundImage,
+      this.state.summary,
+      this.state.chipTag
+    );
+  }
+
+  handleChip(key) {
+    var selectedChip = this.state.chipTag;
+    selectedChip[key].selected = !selectedChip[key].selected;
+    this.setState({ chipTag: selectedChip });
+  }
+
+  handleSummary(e) {
+    this.setState({ summary: e.target.value });
+  }
+
+  removeCover() {
+    this.setState({
+      coverButtonLabel: "choose photo",
+      imageFrontFontColor: "grey"
+    });
+    var target = document.getElementsByClassName("imageContainer")[0];
+    target.style.backgroundImage =
+      'url("./static/media/plan_background.89deb83e.png")';
+    target.style.backgroundColor = "rgba(0,0,0,0)";
+    target.style.backgroundBlendMode = "normal";
+  }
+
+  handlePlanName(e) {
+    this.setState({ planName: e.target.value });
+  }
+
+  onFileUpload(e) {
+    var reader = new FileReader();
+    var file = e.target.files[0];
+
+    if (file === undefined) {
+      return;
+    }
+
+    if (file.type.match(/.(jpg|jpeg|png)$/i) && file.size <= 4194304) {
+      reader.onloadend = () => {
+        this.setState({
+          backgroundImage: reader.result,
+          imageFrontFontColor: "#ffffff",
+          coverButtonLabel: "remove cover"
+        });
+        var target = document.getElementsByClassName("imageContainer")[0];
+        target.style.backgroundImage = "url(" + reader.result + ")";
+        target.style.backgroundColor = "rgba(0,0,0,0.3)";
+        target.style.backgroundBlendMode = "overlay";
+      };
+      reader.readAsDataURL(file);
+    } else
+      alert("Please upload an image file (.jpg/ .jpeg/ .png) less than 4mb");
+  }
+
+  renderChip(data) {
+    return (
+      <Chip
+        key={data.key}
+        style={{
+          margin: "4px",
+          backgroundColor: data.selected ? "#4FC3F7" : "#E0E0E0"
+        }}
+        onClick={() => this.handleChip(data.key)}
+      >
+        {data.label}
+      </Chip>
+    );
+  }
+
   render() {
     const styles = {
       imageContainer: {
         textAlign: "center",
-        fontSize: 11,
+        fontSize: 12,
         color: "black",
         fontFamily: "'Open Sans', sans-serif",
         paddingTop: 50
@@ -26,25 +133,23 @@ class CreatePlan extends Component {
         marginLeft: "30%",
         fontWeight: "bold",
         fontSize: 20,
-        color: "grey",
+        color: this.state.imageFrontFontColor,
         fontFamily: "'Open Sans', sans-serif"
       },
       input: {
         textAlign: "center",
         fontWeight: "bold",
         fontSize: 20,
-        color: "#424242",
+        color: this.state.imageFrontFontColor,
         fontFamily: "'Open Sans', sans-serif"
       },
       raisedButton: {
         marginTop: 30,
-        borderRadius: 25
+        borderRadius: 25,
+        marginBottom: 10
       },
       underline: {
         borderColor: "#03A9F4"
-      },
-      chip: {
-        margin: 4
       },
       chipWrapper: {
         display: "flex",
@@ -67,34 +172,45 @@ class CreatePlan extends Component {
         autoScrollBodyContent={true}
       >
         <div style={styles.imageContainer} className="imageContainer">
-          <p>GIVE YOUR TRIP A NAME</p>
+          <p style={{ color: this.state.imageFrontFontColor }}>
+            GIVE YOUR TRIP A NAME
+          </p>
           <TextField
+            className="target"
             style={styles.textField}
             hintText="Our amazing trip to. . ."
             hintStyle={styles.hintStyle}
             inputStyle={styles.input}
             underlineStyle={styles.underline}
+            value={this.state.planName}
+            onChange={this.handlePlanName}
           />
           <RaisedButton
-            label="choose photo"
+            containerElement="label"
+            label={this.state.coverButtonLabel}
             backgroundColor="#03A9F4"
             style={styles.raisedButton}
             buttonStyle={{ borderRadius: 25 }}
-            labelColor="white"
+            labelColor="#FFFFFF"
             labelStyle={{ fontSize: "11px" }}
-          />
+          >
+            {this.state.coverButtonLabel === "choose photo" ? (
+              <input
+                type="file"
+                style={{ display: "none" }}
+                accept=".png, .jpg, .jpeg"
+                onChange={this.onFileUpload}
+              />
+            ) : (
+              <button style={{ display: "none" }} onClick={this.removeCover} />
+            )}
+          </RaisedButton>
+          <p>.jpeg .jpg .png, MAX 5mb</p>
         </div>
         <div className="formContent">
           <p>WHAT DESCRIBES YOUR TRIP BEST (OPTIONAL)</p>
           <div style={styles.chipWrapper}>
-            <Chip style={styles.chip}>Text Chip</Chip>
-            <Chip style={styles.chip}>Text Chip</Chip>
-            <Chip style={styles.chip}>Text Chip</Chip>
-            <Chip style={styles.chip}>Text Chip</Chip>
-            <Chip style={styles.chip}>Text Chip</Chip>
-            <Chip style={styles.chip}>Text Chip</Chip>
-            <Chip style={styles.chip}>Text Chip</Chip>
-            <Chip style={styles.chip}>Text Chip</Chip>
+            {this.state.chipTag.map(this.renderChip, this)}
           </div>
           <div className="summarySection">
             <p>SUMMARIZE YOUR TRIP (OPTIONAL)</p>
@@ -115,7 +231,9 @@ class CreatePlan extends Component {
                 color: "#424242",
                 fontFamily: "'Open Sans', sans-serif"
               }}
+              value={this.state.summary}
               underlineStyle={styles.underline}
+              onChange={this.handleSummary}
             />
             <div className="getStartedButton">
               <RaisedButton
@@ -123,8 +241,9 @@ class CreatePlan extends Component {
                 backgroundColor="#00E676"
                 style={styles.startedRaisedButton}
                 buttonStyle={{ borderRadius: 25 }}
-                labelColor="white"
+                labelColor="#FFFFFF"
                 labelStyle={{ fontSize: "11px" }}
+                onClick={this.getStarted}
               />
             </div>
           </div>
