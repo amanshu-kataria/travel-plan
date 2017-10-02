@@ -39,7 +39,7 @@ class NavBar extends Component {
             buttonStyle={{ borderRadius: 25 }}
             style={styles.raisedButton}
             label="Create Trip"
-            labelColor="white"
+            labelColor="#FFFFFF"
             labelStyle={{ fontSize: "11px" }}
             onClick={this.props.createPlan}
           />
