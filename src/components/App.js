@@ -12,14 +12,23 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      createPlanOpen: false
+      createPlanOpen: false,
+      planName: "",
+      planImage: "",
+      planSummary: "",
+      planTags: []
     };
     this.togglePlan = this.togglePlan.bind(this);
+    this.createPlan = this.createPlan.bind(this);
   }
 
-  //opens/closes create plan form
+  //opens or closes create plan form
   togglePlan() {
     this.setState({ createPlanOpen: !this.state.createPlanOpen });
+  }
+
+  createPlan(planName, planImage, planSummary, planTags) {
+    this.setState({ planName, planImage, planSummary, planTags });
   }
 
   render() {
@@ -52,16 +61,23 @@ class App extends Component {
               </Col>
             </Row>
             <Row style={styles.row}>
-              <Col sm={3} md={3} lg={3}>
-                <LeftPanel />
+              <Col sm={3} md={3} lg={3} style={styles.col}>
+                <LeftPanel
+                  name={this.state.planName}
+                  image={this.state.planImage}
+                  summary={this.state.planSummary}
+                />
               </Col>
-              <Col sm={9} md={9} lg={9}>
+              <Col sm={9} md={9} lg={9} style={styles.col}>
                 <CenterPanel />
               </Col>
             </Row>
           </Grid>
           {this.state.createPlanOpen ? (
-            <CreatePlan closePlan={this.togglePlan} />
+            <CreatePlan
+              closePlan={this.togglePlan}
+              onCreatePlan={this.createPlan}
+            />
           ) : null}
         </div>
       </MuiThemeProvider>
