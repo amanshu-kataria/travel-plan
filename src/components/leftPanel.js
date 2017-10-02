@@ -1,8 +1,15 @@
 import React, { Component } from "react";
+import PlanCard from "./planCard.js";
 
 class LeftPanel extends Component {
   render() {
-    return <h1>Hello Again</h1>;
+    return (
+      <PlanCard
+        name={this.props.name}
+        image={this.props.image}
+        summary={this.props.summary}
+      />
+    );
   }
 }
 
