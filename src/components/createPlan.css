@@ -1,7 +1,6 @@
 .imageContainer {
   max-height: 220px;
   background-image: url("../assets/images/plan_background.png");
-  background-size: cover;
   background-size: 100% 100%;
 }
 
