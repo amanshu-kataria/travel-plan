@@ -8,6 +8,7 @@ class LeftPanel extends Component {
         name={this.props.name}
         image={this.props.image}
         summary={this.props.summary}
+        tags={this.props.tags}
       />
     );
   }
