@@ -4,6 +4,8 @@ import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 import "./createPlan.css";
 import Chip from "material-ui/Chip";
+import validator from "validator";
+import { Validation, fieldValidatorCore } from "react-validation-framework";
 
 class CreatePlan extends Component {
   constructor(props) {
@@ -39,12 +41,15 @@ class CreatePlan extends Component {
   }
 
   getStarted() {
-    this.props.onCreatePlan(
-      this.state.planName,
-      this.state.backgroundImage,
-      this.state.summary,
-      this.state.chipTag
-    );
+    let checkFieldTestResult = fieldValidatorCore.checkGroup("planName");
+    if (checkFieldTestResult.isValid) {
+      this.props.onCreatePlan(
+        this.state.planName,
+        this.state.backgroundImage,
+        this.state.summary,
+        this.state.chipTag
+      );
+    }
   }
 
   handleChip(key) {
@@ -175,16 +180,25 @@ class CreatePlan extends Component {
           <p style={{ color: this.state.imageFrontFontColor }}>
             GIVE YOUR TRIP A NAME
           </p>
-          <TextField
-            className="target"
-            style={styles.textField}
-            hintText="Our amazing trip to. . ."
-            hintStyle={styles.hintStyle}
-            inputStyle={styles.input}
-            underlineStyle={styles.underline}
-            value={this.state.planName}
-            onChange={this.handlePlanName}
-          />
+          <Validation
+            group="planName"
+            validators={[
+              {
+                validator: val => !validator.isEmpty(val),
+                errorMessage: "Cannot be left empty"
+              }
+            ]}
+          >
+            <TextField
+              style={styles.textField}
+              hintText="Our amazing trip to. . ."
+              hintStyle={styles.hintStyle}
+              inputStyle={styles.input}
+              underlineStyle={styles.underline}
+              value={this.state.planName}
+              onChange={this.handlePlanName}
+            />
+          </Validation>
           <RaisedButton
             containerElement="label"
             label={this.state.coverButtonLabel}
