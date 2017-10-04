@@ -40,6 +40,9 @@ class CreatePlan extends Component {
     this.handleChip = this.handleChip.bind(this);
   }
 
+  /**
+   * Event handler method for Get started button
+   */
   getStarted() {
     let checkFieldTestResult = fieldValidatorCore.checkGroup("planName");
     if (checkFieldTestResult.isValid) {
@@ -52,16 +55,27 @@ class CreatePlan extends Component {
     }
   }
 
+  /**
+   * changes the color of the chip based on it's selected or not.
+   * @param {Number} key - key for each chip(Trip tags)
+   */
   handleChip(key) {
     var selectedChip = this.state.chipTag;
     selectedChip[key].selected = !selectedChip[key].selected;
     this.setState({ chipTag: selectedChip });
   }
 
+  /**
+   * Handler for Summary text
+   * @param {synthetic event} e 
+   */
   handleSummary(e) {
     this.setState({ summary: e.target.value });
   }
 
+  /**
+   * Removes cover image
+   */
   removeCover() {
     this.setState({
       coverButtonLabel: "choose photo",
@@ -74,10 +88,18 @@ class CreatePlan extends Component {
     target.style.backgroundBlendMode = "normal";
   }
 
+  /**
+   * Handler for plan name text
+   * @param {synthetic event} e 
+   */
   handlePlanName(e) {
     this.setState({ planName: e.target.value });
   }
 
+  /**
+   * Handler for file uploader
+   * @param {synthetic event} e 
+   */
   onFileUpload(e) {
     var reader = new FileReader();
     var file = e.target.files[0];
@@ -103,6 +125,13 @@ class CreatePlan extends Component {
       alert("Please upload an image file (.jpg/ .jpeg/ .png) less than 4mb");
   }
 
+  /**
+   * 
+   * 
+   * @param {object} data - contains data for each chip
+   * @returns 
+   * @memberof CreatePlan
+   */
   renderChip(data) {
     return (
       <Chip

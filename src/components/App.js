@@ -25,15 +25,28 @@ class App extends Component {
     this.closeAddStop = this.closeAddStop.bind(this);
   }
 
-  //opens or closes create plan form
+  /**
+   * opens or closes create plan form
+   */
   togglePlan() {
     this.setState({ createPlanOpen: !this.state.createPlanOpen });
   }
 
+  /**
+   * closes the add stop dialog
+   */
   closeAddStop() {
     this.setState({ addStopOpen: !this.state.addStopOpen });
   }
 
+  /**
+   * Create a new plan, closes the create plan dialog
+   * and opens a add stop dialog
+   * @param {String} planName 
+   * @param {String} planImage 
+   * @param {String} planSummary 
+   * @param {String} planTags 
+   */
   createPlan(planName, planImage, planSummary, planTags) {
     this.setState({
       planName,
