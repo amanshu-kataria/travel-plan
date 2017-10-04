@@ -7,12 +7,14 @@ import LeftPanel from "./leftPanel.js";
 import CenterPanel from "./centerPanel.js";
 import NavBar from "./navBar.js";
 import CreatePlan from "./CreatePlan.js";
+import AddStop from "./AddStop.js";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       createPlanOpen: false,
+      addStopOpen: false,
       planName: "",
       planImage: "",
       planSummary: "",
@@ -20,6 +22,7 @@ class App extends Component {
     };
     this.togglePlan = this.togglePlan.bind(this);
     this.createPlan = this.createPlan.bind(this);
+    this.closeAddStop = this.closeAddStop.bind(this);
   }
 
   //opens or closes create plan form
@@ -27,8 +30,19 @@ class App extends Component {
     this.setState({ createPlanOpen: !this.state.createPlanOpen });
   }
 
+  closeAddStop() {
+    this.setState({ addStopOpen: !this.state.addStopOpen });
+  }
+
   createPlan(planName, planImage, planSummary, planTags) {
-    this.setState({ planName, planImage, planSummary, planTags });
+    this.setState({
+      planName,
+      planSummary,
+      planImage,
+      planTags,
+      createPlanOpen: !this.state.createPlanOpen,
+      addStopOpen: !this.state.addStopOpen
+    });
   }
 
   render() {
@@ -62,11 +76,14 @@ class App extends Component {
             </Row>
             <Row style={styles.row}>
               <Col sm={3} md={3} lg={3} style={styles.col}>
-                <LeftPanel
-                  name={this.state.planName}
-                  image={this.state.planImage}
-                  summary={this.state.planSummary}
-                />
+                {this.state.planName ? (
+                  <LeftPanel
+                    name={this.state.planName}
+                    image={this.state.planImage}
+                    summary={this.state.planSummary}
+                    tags={this.state.planTags}
+                  />
+                ) : null}
               </Col>
               <Col sm={9} md={9} lg={9} style={styles.col}>
                 <CenterPanel />
@@ -78,6 +95,9 @@ class App extends Component {
               closePlan={this.togglePlan}
               onCreatePlan={this.createPlan}
             />
+          ) : null}
+          {this.state.addStopOpen ? (
+            <AddStop onClose={this.closeAddStop} />
           ) : null}
         </div>
       </MuiThemeProvider>

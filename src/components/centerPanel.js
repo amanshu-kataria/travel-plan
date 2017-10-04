@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class CenterPanel extends Component {
   render() {
-    return <h1>Hi there!</h1>;
+    return <h1>Center Panel</h1>;
   }
 }
 
