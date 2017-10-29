@@ -41,7 +41,7 @@ class PlanCard extends Component {
           </span>
         </div>
         <div style={styles.tagsWrapper}>
-          {this.props.tags.map((tag, index) => {
+          {this.props.tags.foreach((tag, index) => {
             if (tag.selected)
               return (
                 <span key={index} style={styles.tag}>
