@@ -33,22 +33,57 @@ class App extends Component {
           { label: "Culture", selected: true },
           { label: "Nature", selected: true }
         ],
-        planDays: 7,
+        planDays: 12,
         planStops: [
           {
             name: "Amritsar",
             image:
-              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509257522/Ithaka-frontend/amritsar.jpg"
+              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509257522/Ithaka-frontend/amritsar.jpg",
+            days: "1 Day",
+            coordinates: {
+              lat: 31.63398,
+              long: 74.872261
+            }
           },
           {
             name: "McLeod Ganj",
             image:
-              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509257919/Ithaka-frontend/mcleodganj.jpg"
+              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509257919/Ithaka-frontend/mcleodganj.jpg",
+            days: "2 Days",
+            coordinates: {
+              lat: 32.2426,
+              long: 76.3213
+            }
           },
           {
             name: "Leh",
             image:
-              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509258147/Ithaka-frontend/leh.jpg"
+              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509258147/Ithaka-frontend/leh.jpg",
+            days: "6 Days",
+            coordinates: {
+              lat: 34.152588,
+              long: 77.577049
+            }
+          },
+          {
+            name: "Shimla",
+            image:
+              "http://res.cloudinary.com/amanshu-kataria/image/upload/c_scale,w_800/v1509261733/Ithaka-frontend/Shimla.jpg",
+            days: "2 Days",
+            coordinates: {
+              lat: 31.1048,
+              long: 77.1734
+            }
+          },
+          {
+            name: "Chandigarh",
+            image:
+              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509261988/Ithaka-frontend/chandigarh.jpg",
+            days: "Day Trip",
+            coordinates: {
+              lat: 30.7333,
+              long: 76.7794
+            }
           }
         ]
       }
@@ -143,7 +178,7 @@ class App extends Component {
                 )}
               </Col>
               <Col sm={9} md={9} lg={9} style={styles.col}>
-                <CenterPanel />
+                <CenterPanel stops={this.state.defaultPlan.planStops} />
               </Col>
             </Row>
           </Grid>
