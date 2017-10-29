@@ -1,4 +1,4 @@
-.search-input {
-  width: 40%;
-  height: 40px;
+.suggest-item :hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
 }
