@@ -18,7 +18,40 @@ class App extends Component {
       planName: "",
       planImage: "",
       planSummary: "",
-      planTags: []
+      planTags: [],
+      planDays: 0,
+      planStops: [],
+      defaultPlan: {
+        planName: "North India",
+        planImage:
+          "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509258441/Ithaka-frontend/default_plan.jpg",
+        planSummary:
+          "From Hills to the Capital, Taj Mahal, Golden Temple and much more . . .",
+        planTags: [
+          { label: "Adventure", selected: true },
+          { label: "History", selected: true },
+          { label: "Culture", selected: true },
+          { label: "Nature", selected: true }
+        ],
+        planDays: 7,
+        planStops: [
+          {
+            name: "Amritsar",
+            image:
+              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509257522/Ithaka-frontend/amritsar.jpg"
+          },
+          {
+            name: "McLeod Ganj",
+            image:
+              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509257919/Ithaka-frontend/mcleodganj.jpg"
+          },
+          {
+            name: "Leh",
+            image:
+              "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509258147/Ithaka-frontend/leh.jpg"
+          }
+        ]
+      }
     };
     this.togglePlan = this.togglePlan.bind(this);
     this.createPlan = this.createPlan.bind(this);
@@ -95,8 +128,19 @@ class App extends Component {
                     image={this.state.planImage}
                     summary={this.state.planSummary}
                     tags={this.state.planTags}
+                    days={this.state.planDays}
+                    stops={this.state.planStops}
                   />
-                ) : null}
+                ) : (
+                  <LeftPanel
+                    name={this.state.defaultPlan.planName}
+                    image={this.state.defaultPlan.planImage}
+                    summary={this.state.defaultPlan.planSummary}
+                    tags={this.state.defaultPlan.planTags}
+                    days={this.state.defaultPlan.planDays}
+                    stops={this.state.defaultPlan.planStops}
+                  />
+                )}
               </Col>
               <Col sm={9} md={9} lg={9} style={styles.col}>
                 <CenterPanel />
