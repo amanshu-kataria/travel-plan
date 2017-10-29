@@ -41,13 +41,14 @@ class PlanCard extends Component {
           </span>
         </div>
         <div style={styles.tagsWrapper}>
-          {this.props.tags.forEach((tag, index) => {
+          {this.props.tags.map((tag, index) => {
             if (tag.selected)
               return (
                 <span key={index} style={styles.tag}>
                   {tag.label}
                 </span>
               );
+            else return null;
           })}
         </div>
         <p>{this.props.summary}</p>
