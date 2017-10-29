@@ -33,12 +33,21 @@ class PlanCard extends Component {
       }
     };
     return (
-      <div className="planContainer" style={styles.container}>
+      <div style={styles.container}>
         <h3 style={{ fontWeight: "bold" }}>{this.props.name}</h3>
+        <div>
+          <span>
+            {this.props.days} Days, {this.props.stops.length} Stops
+          </span>
+        </div>
         <div style={styles.tagsWrapper}>
-          {this.props.tags.map(tag => {
+          {this.props.tags.map((tag, index) => {
             if (tag.selected)
-              return <span style={styles.tag}>{tag.label}</span>;
+              return (
+                <span key={index} style={styles.tag}>
+                  {tag.label}
+                </span>
+              );
           })}
         </div>
         <p>{this.props.summary}</p>
