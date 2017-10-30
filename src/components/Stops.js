@@ -16,7 +16,11 @@ class Stops extends Component {
       }
     };
     return (
-      <div style={styles.container}>
+      <div
+        style={styles.container}
+        onMouseEnter={() => this.props.onStopHover(this.props.coordinates)}
+        onMouseLeave={() => this.props.onStopExit()}
+      >
         <h2>{this.props.name}</h2>
         <p style={{ fontSize: 14 }}>{this.props.days}</p>
       </div>

@@ -21,6 +21,10 @@ class App extends Component {
       planTags: [],
       planDays: 0,
       planStops: [],
+      markerLocation: {
+        lat: 31.63398,
+        long: 74.872261
+      },
       defaultPlan: {
         planName: "North India",
         planImage:
@@ -91,6 +95,8 @@ class App extends Component {
     this.togglePlan = this.togglePlan.bind(this);
     this.createPlan = this.createPlan.bind(this);
     this.closeAddStop = this.closeAddStop.bind(this);
+    this.changeMarkerLocation = this.changeMarkerLocation.bind(this);
+    this.setDeaultMarkerLocation = this.setDeaultMarkerLocation.bind(this);
   }
 
   /**
@@ -124,6 +130,16 @@ class App extends Component {
       createPlanOpen: !this.state.createPlanOpen,
       addStopOpen: !this.state.addStopOpen
     });
+  }
+
+  changeMarkerLocation(coordinates) {
+    if (coordinates !== this.state.markerLocation)
+      this.setState({ markerLocation: coordinates });
+  }
+
+  setDeaultMarkerLocation(coordinates) {
+    if (coordinates !== this.state.markerLocation)
+      this.setState({ markerLocation: coordinates });
   }
 
   render() {
@@ -165,6 +181,8 @@ class App extends Component {
                     tags={this.state.planTags}
                     days={this.state.planDays}
                     stops={this.state.planStops}
+                    onStopOver={this.changeMarkerLocation}
+                    onStopExit={this.setDeaultMarkerLocation}
                   />
                 ) : (
                   <LeftPanel
@@ -174,11 +192,16 @@ class App extends Component {
                     tags={this.state.defaultPlan.planTags}
                     days={this.state.defaultPlan.planDays}
                     stops={this.state.defaultPlan.planStops}
+                    onStopOver={this.changeMarkerLocation}
+                    onStopExit={this.setDeaultMarkerLocation}
                   />
                 )}
               </Col>
               <Col sm={9} md={9} lg={9} style={styles.col}>
-                <CenterPanel stops={this.state.defaultPlan.planStops} />
+                <CenterPanel
+                  stops={this.state.defaultPlan.planStops}
+                  marker={this.state.markerLocation}
+                />
               </Col>
             </Row>
           </Grid>

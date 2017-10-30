@@ -12,12 +12,15 @@ class CenterPanel extends Component {
       withGoogleMap(props => (
         <GoogleMap
           defaultZoom={8}
-          defaultCenter={{ lat: 31.51903, lng: 75.903393 }}
+          defaultCenter={{
+            lat: this.props.marker.lat,
+            lng: this.props.marker.long
+          }}
         >
           <Marker
             position={{
-              lat: 31.51903,
-              lng: 75.903393
+              lat: this.props.marker.lat,
+              lng: this.props.marker.long
             }}
           />;
         </GoogleMap>
