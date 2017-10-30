@@ -1,66 +1,30 @@
 import React, { Component } from "react";
 import Dialog from "material-ui/Dialog";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng
-} from "react-places-autocomplete";
 import "./addStop.css";
+import Geosuggest from "react-geosuggest";
 import DropDownMenu from "material-ui/DropDownMenu";
 import MenuItem from "material-ui/MenuItem";
+import IconButton from "material-ui/IconButton";
+import LocationOn from "material-ui/svg-icons/communication/location-on";
 
 class AddStop extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      address: "",
-      geocodeResults: null,
-      loading: false,
       noOfDays: 0
     };
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.renderGeocodeSuccess = this.renderGeocodeSuccess.bind(this);
     this.handleDaysChange = this.handleDaysChange.bind(this);
+    this.onSelect = this.onSelect.bind(this);
   }
 
   handleDaysChange(event, index, noOfDays) {
     this.setState({ noOfDays });
   }
 
-  handleSelect(address) {
-    this.setState({
-      address,
-      loading: true
-    });
-
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(({ lat, lng }) => {
-        this.setState({
-          geocodeResults: this.renderGeocodeSuccess(lat, lng),
-          loading: false
-        });
-      });
+  onSelect(suggest) {
+    console.log(suggest);
   }
 
-  handleChange(address) {
-    this.setState({
-      address,
-      geocodeResults: null
-    });
-  }
-
-  renderGeocodeSuccess(lat, lng) {
-    console.log(lat, lng);
-    return (
-      <div className="alert alert-success" role="alert">
-        <strong>Success!</strong> Geocoder found latitude and longitude:{" "}
-        <strong>
-          {lat}, {lng}
-        </strong>
-      </div>
-    );
-  }
   render() {
     const daysList = [];
     daysList.push(<MenuItem value={0} key={0} primaryText="Day Trip" />);
@@ -68,80 +32,71 @@ class AddStop extends Component {
     for (var i = 2; i <= 100; i++) {
       daysList.push(<MenuItem value={i} key={i} primaryText={`${i} days`} />);
     }
-    const cssClasses = {
-      root: "form-group",
-      input: "search-input",
-      autocompleteContainer: "autocomplete-container"
-    };
-
-    const AutocompleteItem = ({ formattedSuggestion }) => (
-      <div className="suggestion-item">
-        <i className="fa fa-map-marker suggestion-icon" />
-        <strong>{formattedSuggestion.mainText}</strong>{" "}
-        <small className="text-muted">
-          {formattedSuggestion.secondaryText}
-        </small>
-      </div>
-    );
-
-    const inputProps = {
-      type: "text",
-      value: this.state.address,
-      onChange: this.handleChange,
-      autoFocus: true,
-      placeholder: "Enter your stop. . .",
-      name: "places_input",
-      id: "my-input-id"
-    };
-
     const styles = {
-      header: {
-        textAlign: "center",
-        color: "#424242"
-      },
       dropDown: {
-        width: "40%"
+        width: "45%",
+        position: "relative",
+        top: 0
       },
-      label: {
-        fontWeight: "normal",
-        textAlign: "left",
-        fontSize: 12
+      modal: {
+        textAlign: "center"
+      },
+      geosuggest: {
+        input: {
+          width: "40%"
+        }
       }
     };
-
     return (
       <Dialog
-        modal={false}
+        modal={true}
         open={true}
         onRequestClose={() => this.props.onClose()}
         bodyStyle={{ padding: 0 }}
         autoScrollBodyContent={true}
+        style={styles.modal}
       >
-        <div>
-          <h3 style={styles.header}>Let's add main stops!</h3>
-          <div style={{ textAlign: "center" }}>
-            <PlacesAutocomplete
-              onSelect={this.handleSelect}
-              autocompleteItem={AutocompleteItem}
-              onEnterKeyDown={this.handleSelect}
-              classNames={cssClasses}
-              inputProps={inputProps}
-            />
-            {this.state.loading ? (
-              <div>
-                <i className="fa fa-spinner fa-pulse fa-3x fa-fw Demo__spinner" />
-              </div>
-            ) : null}
-            <DropDownMenu
-              style={styles.dropDown}
-              value={this.state.noOfDays}
-              maxHeight={300}
-              onChange={this.handleDaysChange}
-            >
-              {daysList}
-            </DropDownMenu>
-          </div>
-        </div>
+        <h3>Add Stop</h3>
+        <IconButton
+          className="markerImage"
+          iconStyle={{
+            width: 60,
+            height: 60
+          }}
+        >
+          <LocationOn />
+        </IconButton>
+        <Geosuggest
+          ref={el => (this._geoSuggest = el)}
+          onSuggestSelect={this.onSelect}
+          suggestsHiddenClassName="suggest-hidden"
+          suggestItemClassName="suggest-item"
+          suggestsClassName="suggests"
+          style={styles.geosuggest}
+          renderSuggestItem={suggest => {
+            return (
+              <p>
+                <span style={{ fontWeight: "bold" }}>
+                  {suggest.description.slice(
+                    0,
+                    suggest.matchedSubstrings.length
+                  )}
+                </span>
+                <span>
+                  {suggest.description.slice(suggest.matchedSubstrings.length)}
+                </span>
+              </p>
+            );
+          }}
+        />
+        <DropDownMenu
+          style={styles.dropDown}
+          value={this.state.noOfDays}
+          maxHeight={300}
+          onChange={this.handleDaysChange}
+        >
+          {daysList}
+        </DropDownMenu>
       </Dialog>
     );
   }
