@@ -22,7 +22,11 @@ class Stops extends Component {
         onMouseLeave={() => this.props.onStopExit()}
       >
         <h2>{this.props.name}</h2>
-        <p style={{ fontSize: 14 }}>{this.props.days}</p>
+        <p style={{ fontSize: 14 }}>
+          {Number.isInteger(this.props.days)
+            ? this.props.days + " Day(s)"
+            : "Day Trip"}
+        </p>
       </div>
     );
   }
