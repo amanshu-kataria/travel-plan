@@ -15,25 +15,57 @@ class AddStop extends Component {
       photoFileName: "",
       noOfDays: 0,
       coverButtonLabel: "choose photo",
-      stopName: ""
+      stopName: "",
+      photoUrl:
+        "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509443912/default_stop_background_tpjmnd.jpg"
     };
     this.handleDaysChange = this.handleDaysChange.bind(this);
     this.onSelect = this.onSelect.bind(this);
     this.onFileUpload = this.onFileUpload.bind(this);
     this.removeCover = this.removeCover.bind(this);
-    this.allDone = this.allDone.bind(this);
+    this.onAllDone = this.onAllDone.bind(this);
+    this.addNewStop = this.addNewStop.bind(this);
   }
 
-  allDone() {}
+  addNewStop() {
+    if (this.onAllDone("new stop")) {
+      this.removeCover();
+      this._geoSuggest.clear();
+      this.setState({ noOfDays: 0, stopName: "" });
+    }
+  }
 
-  handleDaysChange(event, index, noOfDays) {
+  onAllDone(status) {
+    if (this.state.stopName) {
+      if (this.state.noOfDays === 0) {
+        this.props.onAddStop(
+          this.state.stopName,
+          "Day Trip",
+          this.state.photoUrl
+        );
+      } else {
+        this.props.onAddStop(
+          this.state.stopName,
+          this.state.noOfDays,
+          this.state.photoUrl
+        );
+      }
+      if (status === "done") this.props.onClose();
+      return true;
+    } else alert("Please add details");
+    return false;
+  }
+
+  handleDaysChange(event, noOfDays) {
     this.setState({ noOfDays });
   }
 
   removeCover() {
     this.setState({
       coverButtonLabel: "choose photo",
-      photoFileName: ""
+      photoFileName: "",
+      photoUrl:
+        "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509443912/default_stop_background_tpjmnd.jpg"
     });
   }
 
@@ -44,12 +76,12 @@ class AddStop extends Component {
     if (file === undefined) {
       return;
     }
-    console.log(file.name);
     if (file.type.match(/.(jpg|jpeg|png)$/i) && file.size <= 4194304) {
       reader.onloadend = () => {
         this.setState({
           coverButtonLabel: "remove cover",
-          photoFileName: file.name
+          photoFileName: file.name,
+          photoUrl: reader.result
         });
       };
       reader.readAsDataURL(file);
@@ -101,7 +133,7 @@ class AddStop extends Component {
     };
     return (
       <Dialog
-        modal={true}
+        modal={false}
         open={true}
         onRequestClose={() => this.props.onClose()}
         bodyStyle={{ padding: 0 }}
@@ -198,7 +230,9 @@ class AddStop extends Component {
             labelColor="#FFFFFF"
             style={styles.RaisedButton}
             buttonStyle={{ borderRadius: 25 }}
-            onClick={this.allDone}
+            onClick={() => {
+              this.onAllDone("done");
+            }}
           />
           <RaisedButton
             label="+Add more stops"
@@ -206,6 +240,7 @@ class AddStop extends Component {
             labelColor="#FFFFFF"
             style={styles.RaisedButton}
             buttonStyle={{ borderRadius: 25 }}
+            onClick={this.addNewStop}
           />
         </div>
       </Dialog>
