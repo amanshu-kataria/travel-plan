@@ -4,6 +4,7 @@
 }
 
 .suggest-item {
+  z-index: 999;
   list-style: none;
   text-align: left;
   margin-left: 26%;
@@ -18,4 +19,9 @@
 
 .markerImage {
   margin-right: 5% !important;
+}
+
+.bottomButtons {
+  height: 70px;
+  background-color: #e0e0e0;
 }
