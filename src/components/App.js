@@ -37,13 +37,13 @@ class App extends Component {
           { label: "Culture", selected: true },
           { label: "Nature", selected: true }
         ],
-        planDays: 12,
+        planDays: 11,
         planStops: [
           {
             name: "Amritsar",
             image:
               "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509257522/Ithaka-frontend/amritsar.jpg",
-            days: "1 Day",
+            days: 1,
             coordinates: {
               lat: 31.63398,
               long: 74.872261
@@ -53,7 +53,7 @@ class App extends Component {
             name: "McLeod Ganj",
             image:
               "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509257919/Ithaka-frontend/mcleodganj.jpg",
-            days: "2 Days",
+            days: 2,
             coordinates: {
               lat: 32.2426,
               long: 76.3213
@@ -63,7 +63,7 @@ class App extends Component {
             name: "Leh",
             image:
               "http://res.cloudinary.com/amanshu-kataria/image/upload/v1509258147/Ithaka-frontend/leh.jpg",
-            days: "6 Days",
+            days: 6,
             coordinates: {
               lat: 34.152588,
               long: 77.577049
@@ -73,7 +73,7 @@ class App extends Component {
             name: "Shimla",
             image:
               "http://res.cloudinary.com/amanshu-kataria/image/upload/c_scale,w_800/v1509261733/Ithaka-frontend/Shimla.jpg",
-            days: "2 Days",
+            days: 2,
             coordinates: {
               lat: 31.1048,
               long: 77.1734
@@ -97,6 +97,37 @@ class App extends Component {
     this.closeAddStop = this.closeAddStop.bind(this);
     this.changeMarkerLocation = this.changeMarkerLocation.bind(this);
     this.setDeaultMarkerLocation = this.setDeaultMarkerLocation.bind(this);
+    this.addStop = this.addStop.bind(this);
+  }
+
+  /**
+   * Adds a new stop to plan
+   * @param {object} stop - contains stop details
+   * @param {number} totalDays - number of days spent
+   * @param {string} photoUrl - url for background image
+   */
+  addStop(stop, totalDays, photoUrl) {
+    var stops = this.state.planStops;
+    var newStop = {
+      name: stop.description,
+      image: photoUrl,
+      days: totalDays,
+      coordinates: {
+        lat: stop.location.lat,
+        long: stop.location.lng
+      }
+    };
+
+    var planDays = this.state.planDays;
+    if (Number.isInteger(totalDays)) planDays += totalDays;
+
+    stops.push(newStop);
+
+    this.setState({ markerLocation: stops[0].coordinates });
+    this.setState({
+      planStops: stops,
+      planDays
+    });
   }
 
   /**
@@ -132,11 +163,19 @@ class App extends Component {
     });
   }
 
+  /**
+   * Changes the marker location whenever mouse if hover on a different stop.
+   * @param {object} coordinates
+   */
   changeMarkerLocation(coordinates) {
     if (coordinates !== this.state.markerLocation)
       this.setState({ markerLocation: coordinates });
   }
 
+  /**
+   * Changes the marker location to default i.e. first stop.
+   * @param {object} coordinates
+   */
   setDeaultMarkerLocation(coordinates) {
     if (coordinates !== this.state.markerLocation)
       this.setState({ markerLocation: coordinates });
@@ -212,7 +251,7 @@ class App extends Component {
             />
           ) : null}
           {this.state.addStopOpen ? (
-            <AddStop onClose={this.closeAddStop} />
+            <AddStop onClose={this.closeAddStop} onAddStop={this.addStop} />
           ) : null}
         </div>
       </MuiThemeProvider>
