@@ -34,15 +34,27 @@ class NavBar extends Component {
         showMenuIconButton={false}
         titleStyle={styles.appBarTitle}
         iconElementRight={
-          <RaisedButton
-            backgroundColor="#03A9F4"
-            buttonStyle={{ borderRadius: 25 }}
-            style={styles.raisedButton}
-            label="Create Trip"
-            labelColor="#FFFFFF"
-            labelStyle={{ fontSize: "11px" }}
-            onClick={this.props.createPlan}
-          />
+          !this.props.planCreated ? (
+            <RaisedButton
+              backgroundColor="#03A9F4"
+              buttonStyle={{ borderRadius: 25 }}
+              style={styles.raisedButton}
+              label="Create Trip"
+              labelColor="#FFFFFF"
+              labelStyle={{ fontSize: "11px" }}
+              onClick={this.props.createPlan}
+            />
+          ) : (
+            <RaisedButton
+              backgroundColor="#03A9F4"
+              buttonStyle={{ borderRadius: 25 }}
+              style={styles.raisedButton}
+              label="Add Stop"
+              labelColor="#FFFFFF"
+              labelStyle={{ fontSize: "11px" }}
+              onClick={this.props.addStop}
+            />
+          )
         }
       />
     );

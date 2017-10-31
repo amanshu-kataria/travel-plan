@@ -13,6 +13,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      planCreated: false,
       createPlanOpen: false,
       addStopOpen: false,
       planName: "",
@@ -94,7 +95,7 @@ class App extends Component {
     };
     this.togglePlan = this.togglePlan.bind(this);
     this.createPlan = this.createPlan.bind(this);
-    this.closeAddStop = this.closeAddStop.bind(this);
+    this.toggleAddStop = this.toggleAddStop.bind(this);
     this.changeMarkerLocation = this.changeMarkerLocation.bind(this);
     this.setDeaultMarkerLocation = this.setDeaultMarkerLocation.bind(this);
     this.addStop = this.addStop.bind(this);
@@ -138,9 +139,9 @@ class App extends Component {
   }
 
   /**
-   * closes the add stop dialog
+   * toggles the add stop dialog
    */
-  closeAddStop() {
+  toggleAddStop() {
     this.setState({ addStopOpen: !this.state.addStopOpen });
   }
 
@@ -159,7 +160,8 @@ class App extends Component {
       planImage,
       planTags,
       createPlanOpen: !this.state.createPlanOpen,
-      addStopOpen: !this.state.addStopOpen
+      addStopOpen: !this.state.addStopOpen,
+      planCreated: !this.state.planCreated
     });
   }
 
@@ -207,7 +209,11 @@ class App extends Component {
           <Grid fluid style={styles.grid}>
             <Row style={styles.row}>
               <Col style={styles.col}>
-                <NavBar createPlan={this.togglePlan} />
+                <NavBar
+                  createPlan={this.togglePlan}
+                  planCreated={this.state.planCreated}
+                  addStop={this.toggleAddStop}
+                />
               </Col>
             </Row>
             <Row style={styles.row}>
@@ -251,7 +257,7 @@ class App extends Component {
             />
           ) : null}
           {this.state.addStopOpen ? (
-            <AddStop onClose={this.closeAddStop} onAddStop={this.addStop} />
+            <AddStop onClose={this.toggleAddStop} onAddStop={this.addStop} />
           ) : null}
         </div>
       </MuiThemeProvider>
