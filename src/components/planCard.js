@@ -25,11 +25,11 @@ class PlanCard extends Component {
         margin: "2px"
       },
       tagsWrapper: {
-        width: "80%",
-        paddingLeft: "20px",
-        textAlign: "center",
+        width: "100%",
+        padding: "5px",
         display: "flex",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        justifyContent: "center"
       }
     };
     return (
