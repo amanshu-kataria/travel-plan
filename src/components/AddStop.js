@@ -7,6 +7,7 @@ import MenuItem from "material-ui/MenuItem";
 import IconButton from "material-ui/IconButton";
 import LocationOn from "material-ui/svg-icons/communication/location-on";
 import RaisedButton from "material-ui/RaisedButton";
+import Close from "material-ui/svg-icons/navigation/close";
 
 class AddStop extends Component {
   constructor() {
@@ -140,7 +141,13 @@ class AddStop extends Component {
         autoScrollBodyContent={true}
         style={styles.modal}
       >
-        <h3 style={{ color: "#212121" }}>Add Stop</h3>
+        <IconButton
+          style={{ float: "right" }}
+          onClick={() => this.props.onClose()}
+        >
+          <Close />
+        </IconButton>
+        <h3 style={{ color: "#212121", marginLeft: "5%" }}>Add Stop</h3>
         <IconButton
           className="markerImage"
           iconStyle={{
