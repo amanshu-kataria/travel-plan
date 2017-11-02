@@ -134,7 +134,7 @@ class AddStop extends Component {
     };
     return (
       <Dialog
-        modal={false}
+        modal={true}
         open={true}
         onRequestClose={() => this.props.onClose()}
         bodyStyle={{ padding: 0 }}
