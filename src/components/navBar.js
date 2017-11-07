@@ -30,7 +30,7 @@ class NavBar extends Component {
     return (
       <AppBar
         style={styles.appBar}
-        title="Amanshu Ithaka Hack"
+        title="Ithaka Frontend Hack"
         showMenuIconButton={false}
         titleStyle={styles.appBarTitle}
         iconElementRight={
