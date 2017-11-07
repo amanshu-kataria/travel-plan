@@ -30,7 +30,7 @@ class NavBar extends Component {
     return (
       <AppBar
         style={styles.appBar}
-        title="Ithaka Frontend Hack"
+        title="Map Plan Viewer"
         showMenuIconButton={false}
         titleStyle={styles.appBarTitle}
         iconElementRight={

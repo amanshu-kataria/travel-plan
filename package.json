@@ -1,7 +1,7 @@
 {
-  "name": "amanshu-ithaka-hack",
+  "name": "map-plan-viewer",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "bootstrap": "^3.3.7",
     "material-ui": "^0.19.4",
@@ -22,7 +22,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "http://amanshu-kataria.github.io/Ithaka-frontend-hack",
   "devDependencies": {
     "gh-pages": "^1.0.0"
   }
