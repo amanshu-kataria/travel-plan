@@ -2,6 +2,8 @@
 
 A single-page application to display all the available plans on the map and to create a plan as well.
 
+![ithakafrontend](https://user-images.githubusercontent.com/13014093/32478680-15db9462-c3ac-11e7-8fc6-22552b6ea8a0.gif)
+
 ## Requirements
 You will need:
 - Latest version of <a href="https://nodejs.org/en/" target="_blank">NodeJS</a>.
