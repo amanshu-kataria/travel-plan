@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "4.1.3",
     "material-ui": "^0.19.4",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
