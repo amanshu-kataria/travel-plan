@@ -30,10 +30,3 @@ The `CenterPanel` has a map which highlights the cities listed on the plan when 
 
 ### PlanCard
 The `PlanCard` displays the name on the top background image with a tint on it.
-
-<p align="center" style="border-top:1px solid #555; font-size:11px;margin:30px 0 0;">
-  This frontend hack is maintained by <a href="http://www.ithaka.travel" target="_blank">Ithaka</a>. All rights reserved.
-</p>
-
-
-
